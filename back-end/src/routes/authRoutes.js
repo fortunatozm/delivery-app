@@ -2,6 +2,6 @@ const { Router } = require('express');
 
 const authRoutes = Router();
 
-authRoutes.get('/login',)
+authRoutes.get('/login');
 
-module.exports = authRoutes
+module.exports = authRoutes;
