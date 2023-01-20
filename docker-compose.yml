@@ -9,7 +9,7 @@ services:
     platform: linux/x86_64
     working_dir: /app-frontend
     volumes:
-      - ./front-end/src:/app-backend/src
+      - ./front-end/src:/app-fronted/src
     depends_on:
       backend:
         condition: service_healthy
