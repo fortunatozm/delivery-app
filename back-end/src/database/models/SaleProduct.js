@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  SaleProductTable.associate(({ Sale, Product }) => {
+  SaleProductTable.associate = (({ Sale, Product }) => {
     Sale.belongsToMany(Product, {
       as: "products",
       foreignKey: "saleId",
