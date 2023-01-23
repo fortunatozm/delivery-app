@@ -1,12 +1,14 @@
-const { loginServicePost } = require("../services/login.services")
+const { loginService } = require('../services');
 
 const loginControllerPost = async (req, res) => {
-    const requestData = req.body;
-    console.log(requestData)
-    const result = await loginServicePost(requestData);
-    return res.status(result.status).json({ token: result.message });
+  const data = req.body;
+  const result = await loginService.loginServicePost(data);
+  if (result.status === 404) {
+    return res.status(result.status).json({ message: result.message });
+  }
+  return res.status(result.status).json({ token: result.message });
 };
 
 module.exports = {
-    loginControllerPost,
-}
+  loginControllerPost,
+};
