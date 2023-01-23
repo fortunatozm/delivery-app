@@ -11,7 +11,7 @@ const loginServicePost = async (data) => {
   });
 
   if (result === null) {
-    return { status: 400, message: 'Email ou senha inválidos' };
+    return { status: 404, message: 'Email ou senha inválidos' };
   }
 
   return { status: 200, message: createToken() };
