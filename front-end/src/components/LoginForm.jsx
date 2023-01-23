@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import postLogin from '../services/postLogin';
 
 function LoginForm() {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -47,6 +48,7 @@ function LoginForm() {
 
       <button
         disabled={ submitButtonDisabled }
+        onClick={ postLogin() }
         type="button"
         data-testid="common_login__button-login"
       >
