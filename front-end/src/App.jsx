@@ -10,7 +10,7 @@ function App() {
       <Redirect exact from="/" to="/login" />
       <Route path="/login" component={ Login } />
       <Route exact path="/register" component={ Registers } />
-      <Route path="/costumer" component={ Products } />
+      <Route path="/customer/products" component={ Products } />
     </Switch>
   );
 }
