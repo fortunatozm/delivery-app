@@ -41,7 +41,7 @@ function ProductCard({ id, price, imageUrl, name }) {
   );
 }
 
-ProductCard.propsTypes = {
+ProductCard.propTypes = {
   id: number.isRequired,
   price: number.isRequired,
   imageUrl: string.isRequired,

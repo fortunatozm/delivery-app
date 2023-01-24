@@ -7,6 +7,8 @@ function LoginForm() {
   const history = useHistory();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+  // const [errorText, setErrorText] = useState(false);
+  // const [token, setToken] = useState();
 
   const validateFormData = () => {
     const MIN_PASSWORD_SIZE = 6;
@@ -80,6 +82,10 @@ function LoginForm() {
       <button type="button" data-testid="common_login__button-register">
         Ainda não tenho conta
       </button>
+      {errorText ? (
+        <p data-testid="common_login__element-invalid-email">
+          Impossível fazer login
+        </p>) : null}
     </form>
   );
 }
