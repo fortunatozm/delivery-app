@@ -1,8 +1,6 @@
-const md5 = require('md5');
 const { Product } = require('../database/models');
-const { createToken } = require('../utils/jwt.util');
 
-const productServiceGet = async (data) => {
+const productServiceGet = async () => {
   const result = await Product.findAll({});
 
   if (result === null) {
