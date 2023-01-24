@@ -7,7 +7,7 @@ function LoginForm() {
   const history = useHistory();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
-  // const [errorText, setErrorText] = useState(false);
+  const [errorText, setErrorText] = useState(false);
   // const [token, setToken] = useState();
 
   const validateFormData = () => {
@@ -29,6 +29,7 @@ function LoginForm() {
     try {
       const user = await requests.get.user();
       localStorage.setItem('user', JSON.stringify({ ...user, token }));
+      return user;
     } catch (err) {
       console.error('Usuário não encontrado');
     }
@@ -37,12 +38,14 @@ function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setErrorText(false);
       const { token } = await postLogin(formData);
       setTokenHeaders(token);
-      await saveUser(token);
-      history.push('/customer/products');
+      const { role } = await saveUser(token);
+      history.push(`/${role}/products`);
     } catch (error) {
       console.error('Email ou senha inválidos');
+      setErrorText(true);
     }
   };
 
@@ -84,7 +87,7 @@ function LoginForm() {
       </button>
       {errorText ? (
         <p data-testid="common_login__element-invalid-email">
-          Impossível fazer login
+          Email ou senha inválidos
         </p>) : null}
     </form>
   );
