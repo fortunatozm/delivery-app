@@ -1,9 +1,11 @@
 import Navbar from '../components/Navbar';
 import useApiGet from '../hooks/useApiGet';
-import Product from '../components/Product';
+import ProductCard from '../components/ProductCard';
+import useLoginValidator from '../hooks/useLoginValidator';
 
 function Products() {
-  const { data, isFetching } = useApiGet('products');
+  const { data, errorStatus, isFetching } = useApiGet('user');
+  useLoginValidator(errorStatus);
 
   return (
     <div>
@@ -11,7 +13,7 @@ function Products() {
       {!isFetching && (
         <section>
           {data.map(({ id, imageUrl, name, price }) => (
-            <Product
+            <ProductCard
               key={ id }
               id={ id }
               imageUrl={ imageUrl }

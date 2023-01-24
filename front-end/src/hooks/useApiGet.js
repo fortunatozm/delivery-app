@@ -7,7 +7,9 @@ function useApiGet(request, params) {
   const [errorStatus, setErrorStatus] = useState(0);
 
   useEffect(() => {
-    setTokenHeaders(getToken());
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) setTokenHeaders(user.token);
+
     requests.get[request](params)
       .then((response) => setData(response))
       .catch((error) => setErrorStatus(error.response.status))
