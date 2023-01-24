@@ -7,6 +7,11 @@ function Navbar() {
     history.push(route);
   };
 
+  const logout = () => {
+    history.push('/');
+    localStorage.removeItem('user');
+  };
+
   return (
     <header>
       <nav>
@@ -30,6 +35,7 @@ function Navbar() {
         <button
           data-testid="customer_products__element-navbar-link-logout"
           type="button"
+          onClick={ logout }
         >
           Sair
         </button>

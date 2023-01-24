@@ -38,7 +38,7 @@ function LoginForm() {
       const { token } = await postLogin(formData);
       setTokenHeaders(token);
       await saveUser(token);
-      history.push('/costumer');
+      history.push('/customer/products');
     } catch (error) {
       console.error('Email ou senha inválidos');
     }
