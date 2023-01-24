@@ -1,7 +1,7 @@
 import React from 'react';
 import { number, string } from 'prop-types';
 
-function Product({ id, price, imageUrl, name }) {
+function ProductCard({ id, price, imageUrl, name }) {
   return (
     <div>
       <div>
@@ -41,11 +41,11 @@ function Product({ id, price, imageUrl, name }) {
   );
 }
 
-Product.propsTypes = {
+ProductCard.propsTypes = {
   id: number.isRequired,
   price: number.isRequired,
   imageUrl: string.isRequired,
   name: string.isRequired,
 };
 
-export default Product;
+export default ProductCard;
