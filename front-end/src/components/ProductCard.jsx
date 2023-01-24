@@ -41,11 +41,17 @@ function ProductCard({ id, price, imageUrl, name }) {
   );
 }
 
+ProductCard.defaultProps = {
+  price: '',
+  imageUrl: '',
+  name: '',
+};
+
 ProductCard.propTypes = {
   id: number.isRequired,
-  price: number.isRequired,
-  imageUrl: string.isRequired,
-  name: string.isRequired,
+  price: string,
+  imageUrl: string,
+  name: string,
 };
 
 export default ProductCard;
