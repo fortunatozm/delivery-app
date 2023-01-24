@@ -5,7 +5,7 @@ chai.use(require("chai-http"));
 chai.use(require("sinon-chai"));
 const { expect } = chai;
 
-const { registerController } = require("../../../controllers");
+const { authController } = require("../../../controllers");
 const { registerService } = require("../../../services");
 const { newUserMock, newUserResponseMock } = require("../../mocks/user.mock");
 
@@ -23,7 +23,7 @@ describe("Register controller", function () {
         .stub(registerService, "registerServicePost")
         .resolves({ status: null, message: newUserResponseMock });
 
-      await registerController.registerControllerPost(req, res);
+      await authController.registerControllerPost(req, res);
 
       expect(res.status).to.have.been.calledWith(201);
       expect(res.json).to.have.been.calledWith(newUserResponseMock);
@@ -44,7 +44,7 @@ describe("Register controller", function () {
         .stub(registerService, "registerServicePost")
         .resolves({ status: 400, message: "invalid password" });
 
-      await registerController.registerControllerPost(req, res);
+      await authController.registerControllerPost(req, res);
 
       expect(res.status).to.have.been.calledWith(400);
       expect(res.json).to.have.been.calledWith({ message: "invalid password" });
@@ -60,7 +60,7 @@ describe("Register controller", function () {
         .stub(registerService, "registerServicePost")
         .resolves({ status: 409, message: "Usuário já cadastrado" });
 
-      await registerController.registerControllerPost(req, res);
+      await authController.registerControllerPost(req, res);
 
       expect(res.status).to.have.been.calledWith(409);
       expect(res.json).to.have.been.calledWith({
