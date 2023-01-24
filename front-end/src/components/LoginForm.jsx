@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import postLogin from '../services/postLogin';
+import requests, { setTokenHeaders } from '../services/requests';
 
 function LoginForm() {
+  const history = useHistory();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
 
@@ -20,8 +23,29 @@ function LoginForm() {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const saveUser = async (token) => {
+    try {
+      const user = await requests.get.user();
+      localStorage.setItem('user', JSON.stringify({ ...user, token }));
+    } catch (err) {
+      console.error('Usuário não encontrado');
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { token } = await postLogin(formData);
+      setTokenHeaders(token);
+      await saveUser(token);
+      history.push('/customer/products');
+    } catch (error) {
+      console.error('Email ou senha inválidos');
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={ handleSubmit }>
       <label htmlFor="email">
         Login
         <input
@@ -48,19 +72,13 @@ function LoginForm() {
 
       <button
         disabled={ submitButtonDisabled }
-        onClick={ postLogin() }
-        type="button"
+        type="submit"
         data-testid="common_login__button-login"
       >
         Login
-
       </button>
-      <button
-        type="button"
-        data-testid="common_login__button-register"
-      >
+      <button type="button" data-testid="common_login__button-register">
         Ainda não tenho conta
-
       </button>
     </form>
   );
