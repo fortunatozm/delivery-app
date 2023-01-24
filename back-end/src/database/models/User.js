@@ -20,11 +20,11 @@ module.exports = (sequelize, DataTypes) => {
 
   UserTable.associate = ({ Sale }) => {
     UserTable.hasMany(Sale, {
-      as: "sales",
+      as: "users",
       foreignKey: "userId",
     });
     UserTable.hasMany(Sale, {
-      as: "sales",
+      as: "sellers",
       foreignKey: "sellerId",
     });
   };
