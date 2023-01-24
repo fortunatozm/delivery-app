@@ -1,7 +1,9 @@
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 function Navbar() {
   const history = useHistory();
+  const [user, setUser] = useState({});
 
   const routeChange = (route) => {
     history.push(route);
@@ -11,6 +13,10 @@ function Navbar() {
     history.push('/');
     localStorage.removeItem('user');
   };
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('user')));
+  }, []);
 
   return (
     <header>
@@ -30,7 +36,7 @@ function Navbar() {
           Meus pedidos
         </button>
         <p data-testid="customer_products__element-navbar-user-full-name">
-          Nome de usuário
+          {user.name}
         </p>
         <button
           data-testid="customer_products__element-navbar-link-logout"
