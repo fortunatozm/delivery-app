@@ -26,7 +26,7 @@ function Registers() {
             <br />
             <input
               type="text"
-              data-testids="common_register__input-name"
+              data-testid="common_register__input-name"
               name="nome"
               placeholder="Seu nome"
             />
@@ -38,7 +38,7 @@ function Registers() {
             <br />
             <input
               type="text"
-              data-testids="common_register__input-email"
+              data-testid="common_register__input-email"
               name="email"
               placeholder="seu-email@site.com.br"
             />
@@ -50,7 +50,7 @@ function Registers() {
             <br />
             <input
               type="password"
-              data-testids="common_register__input-password"
+              data-testid="common_register__input-password"
               name="senha"
               placeholder="********"
             />
@@ -58,7 +58,7 @@ function Registers() {
           <br />
           <button
             type="button"
-            data-testids="common_register__button-register"
+            data-testid="common_register__button-register"
             onClick={ dataValid }
           >
             Cadastrar
