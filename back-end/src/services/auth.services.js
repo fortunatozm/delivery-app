@@ -56,7 +56,18 @@ const getUser = async (authToken) => {
     where: { email },
   });
 
-  return { name: user.name, email, role: user.role };
+  if (!user) {
+    return { status: 404, message: 'Usuário não encontrado' };
+  }
+
+  return {
+    status: null,
+    message: {
+      name: user.name,
+      email,
+      role: user.role,
+    },
+  };
 };
 
 module.exports = { loginServicePost, registerServicePost, getUser };
