@@ -4,7 +4,7 @@ import ProductCard from '../components/ProductCard';
 import useLoginValidator from '../hooks/useLoginValidator';
 
 function Products() {
-  const { data, errorStatus, isFetching } = useApiGet('user');
+  const { data, errorStatus, isFetching } = useApiGet('products');
   useLoginValidator(errorStatus);
 
   return (
