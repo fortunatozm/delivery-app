@@ -1,0 +1,13 @@
+.registerClass {
+  display: inline-block;
+  position: absolute;
+  /* text-align: center; */
+}
+
+.paragrafoFrom {
+  text-align: center;
+}
+
+.registerError {
+  text-align: center;
+}
