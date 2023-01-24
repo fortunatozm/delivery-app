@@ -1,11 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import postLogin from '../services/postLogin';
+import requests, { setTokenHeaders } from '../services/requests';
 
 function LoginForm() {
+  const history = useHistory();
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+  const [errorText, setErrorText] = useState(false);
+  // const [token, setToken] = useState();
+
+  const validateFormData = () => {
+    const MIN_PASSWORD_SIZE = 6;
+
+    const isValidEmail = /\S+@\S+\.\S+/.test(formData.email);
+    const isValidPassword = formData.password.length >= MIN_PASSWORD_SIZE;
+
+    setSubmitButtonDisabled(!(isValidEmail && isValidPassword));
+  };
+
+  useEffect(validateFormData, [formData]);
+
+  const handleChange = ({ target: { name, value } }) => {
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const saveUser = async (token) => {
+    try {
+      const user = await requests.get.user();
+      localStorage.setItem('user', JSON.stringify({ ...user, token }));
+      return user;
+    } catch (err) {
+      console.error('Usuário não encontrado');
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setErrorText(false);
+      const { token } = await postLogin(formData);
+      setTokenHeaders(token);
+      const { role } = await saveUser(token);
+      history.push(`/${role}/products`);
+    } catch (error) {
+      console.error('Email ou senha inválidos');
+      setErrorText(true);
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={ handleSubmit }>
       <label htmlFor="email">
         Login
         <input
+          onChange={ handleChange }
+          value={ setFormData.email }
           type="email"
           name="email"
           id="email"
@@ -16,6 +66,8 @@ function LoginForm() {
       <label htmlFor="senha">
         Senha
         <input
+          onChange={ handleChange }
+          value={ setFormData.password }
           type="password"
           name="password"
           id="password"
@@ -24,19 +76,19 @@ function LoginForm() {
       </label>
 
       <button
-        type="button"
+        disabled={ submitButtonDisabled }
+        type="submit"
         data-testid="common_login__button-login"
       >
         Login
-
       </button>
-      <button
-        type="button"
-        data-testid="common_login__button-register"
-      >
+      <button type="button" data-testid="common_login__button-register">
         Ainda não tenho conta
-
       </button>
+      {errorText ? (
+        <p data-testid="common_login__element-invalid-email">
+          Email ou senha inválidos
+        </p>) : null}
     </form>
   );
 }
