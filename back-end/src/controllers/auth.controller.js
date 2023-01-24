@@ -21,9 +21,10 @@ const registerControllerPost = async (req, res) => {
 };
 
 const userDataGet = async (req, res) => {
-  const auth = req.headers.authorization;
+  const authToken = req.headers.authorization;
 
-  // const user = await
+  const user = await authService.getUser(authToken);
+  res.status(200).json(user);
 };
 
 module.exports = {

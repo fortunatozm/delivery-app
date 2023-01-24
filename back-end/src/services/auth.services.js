@@ -2,7 +2,7 @@ const md5 = require('md5');
 const { Op } = require('sequelize');
 const { User } = require('../database/models');
 const { validateRegister } = require('./validations/validator');
-const { createToken } = require('../utils/jwt.util');
+const { createToken, authenticate } = require('../utils/jwt.util');
 
 const loginServicePost = async (data) => {
   const { email, password } = data;
@@ -16,7 +16,7 @@ const loginServicePost = async (data) => {
     return { status: 404, message: 'Email ou senha inválidos' };
   }
 
-  return { status: 200, message: createToken() };
+  return { status: 200, message: createToken({ email }) };
 };
 
 const newUserValidator = async (email, name) => {
@@ -46,4 +46,17 @@ const registerServicePost = async (data) => {
   return { status: null, message: newUser };
 };
 
-module.exports = { loginServicePost, registerServicePost };
+const getUser = async (authToken) => {
+  const validateUser = await authenticate(authToken);
+  if (validateUser.status) return validateUser;
+
+  const { email } = validateUser;
+
+  const user = await User.findOne({
+    where: { email },
+  });
+
+  return { name: user.name, email, role: user.role };
+};
+
+module.exports = { loginServicePost, registerServicePost, getUser };
