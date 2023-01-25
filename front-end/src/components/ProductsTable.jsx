@@ -1,7 +1,7 @@
-import { arrayOf, shape } from 'prop-types';
+import formatToBRL from '../utils/formatToBRL';
 
 function ProductsTable() {
-  const products = JSON.parse(localStorage.getItem('cart'));
+  const products = JSON.parse(localStorage.getItem('cart')) || [];
 
   return (
     <table>
@@ -38,28 +38,26 @@ function ProductsTable() {
             <td
               data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
             >
-              {price}
+              {formatToBRL(price)}
             </td>
             <td
               data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
             >
-              0.00
+              {formatToBRL(quantity * price)}
             </td>
-            <button
-              data-testid={ `customer_checkout__element-order-table-remove-${index}` }
-              type="button"
-            >
-              Remover
-            </button>
+            <td>
+              <button
+                data-testid={ `customer_checkout__element-order-table-remove-${index}` }
+                type="button"
+              >
+                Remover
+              </button>
+            </td>
           </tr>
         ))}
       </tbody>
     </table>
   );
 }
-
-ProductsTable.propsTypes = {
-  products: arrayOf(shape({})).isRequired,
-};
 
 export default ProductsTable;

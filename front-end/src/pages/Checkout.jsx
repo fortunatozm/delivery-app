@@ -1,17 +1,25 @@
 import Navbar from '../components/Navbar';
 import ProductsTable from '../components/ProductsTable';
+import formatToBRL from '../utils/formatToBRL';
 
 function Checkout() {
+  const products = JSON.parse(localStorage.getItem('cart')) || [];
+
+  const totalPrice = products.reduce(
+    (acc, curr) => acc + curr.quantity * curr.price,
+    0,
+  );
+
   return (
     <div>
       <Navbar />
       <div>
         <section>
           <h1>Finalizar pedido</h1>
-          <ProductsTable products={ [{}] } />
+          <ProductsTable />
           <div>
             <p data-testid="customer_checkout__element-order-total-price">
-              0.00
+              {`Total: ${formatToBRL(totalPrice)}`}
             </p>
           </div>
         </section>
