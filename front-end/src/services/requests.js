@@ -11,7 +11,7 @@ const requests = {
       return data;
     },
     user: async () => {
-      const { data } = await api.get('/auth/me');
+      const { data } = await api.get('/me');
       return data;
     },
   },
