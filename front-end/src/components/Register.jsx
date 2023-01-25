@@ -13,7 +13,7 @@ function Registers() {
     const data = await registerValidation(dados);
     console.log(data);
   };
-  
+
   return (
     <div className="registerClass">
       <div className="paragrafoFrom">
