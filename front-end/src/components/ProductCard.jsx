@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { number, string } from 'prop-types';
+import setStorage from '../storage/localStorage';
 
 function ProductCard({ id, price, urlImage, name }) {
+  const [product, setProduct] = useState(0);
+  const handleClickAdd = (idProduct, priceProduct, nameProduct) => {
+    setProduct(product + 1);
+    setStorage(idProduct, priceProduct, nameProduct, product);
+  };
+  const handleClickRemove = () => {
+    setProduct(product - 1);
+    if (product <= 0) {
+      setProduct(0);
+    }
+  };
+  const handleValue = ({ target }) => {
+    setProduct(Number(target.value));
+  };
   return (
     <div>
       <div>
@@ -22,17 +37,20 @@ function ProductCard({ id, price, urlImage, name }) {
           <button
             data-testid={ `customer_products__button-card-rm-item-${id}` }
             type="button"
+            onClick={ () => handleClickRemove() }
           >
             -
           </button>
           <input
             type="number"
             data-testid={ `customer_products__input-card-quantity-${id}` }
-            value={ 0 }
+            value={ product }
+            onChange={ (event) => handleValue(event) }
           />
           <button
             data-testid={ `customer_products__button-card-add-item-${id}` }
             type="button"
+            onClick={ () => handleClickAdd(id, price, name) }
           >
             +
           </button>

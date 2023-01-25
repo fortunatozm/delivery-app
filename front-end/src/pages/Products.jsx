@@ -23,6 +23,15 @@ function Products() {
           ))}
         </section>
       )}
+      <button
+        data-testid="customer_products__button-cart"
+        type="button"
+      >
+        {' '}
+        Ver Carrinho:
+        {' '}
+
+      </button>
     </div>
   );
 }
