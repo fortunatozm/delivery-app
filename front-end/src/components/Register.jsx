@@ -11,7 +11,7 @@ function Registers() {
     error: null,
     boolButton: true,
   });
-
+  // n0sssa
   const onChangeRegisters = ({ target }) => {
     const { name, value } = target;
     setRegister((prevState) => ({ ...prevState, [name]: value }));
