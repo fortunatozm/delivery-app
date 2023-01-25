@@ -1,7 +1,19 @@
 import React from 'react';
 import '../componentsCss/register.css';
+import registerValidation from '../services/registerService';
 
 function Registers() {
+  const dataValid = async ({ target }) => {
+    console.log(target);
+    const dados = {
+      email: 'fortunato@hotmail.com',
+      name: 'Fortunato',
+      role: 'dados',
+      password: 'deucerto' };
+    const data = await registerValidation(dados);
+    console.log(data);
+  };
+  
   return (
     <div className="registerClass">
       <div className="paragrafoFrom">
@@ -14,7 +26,7 @@ function Registers() {
             <br />
             <input
               type="text"
-              id="nameId"
+              data-testid="common_register__input-name"
               name="nome"
               placeholder="Seu nome"
             />
@@ -26,7 +38,7 @@ function Registers() {
             <br />
             <input
               type="text"
-              id="emailId"
+              data-testid="common_register__input-email"
               name="email"
               placeholder="seu-email@site.com.br"
             />
@@ -38,18 +50,23 @@ function Registers() {
             <br />
             <input
               type="password"
+              data-testid="common_register__input-password"
               id="senhaId"
               name="senha"
               placeholder="********"
             />
           </label>
           <br />
-          <button type="button" id="button">
+          <button
+            type="button"
+            data-testid="common_register__button-register"
+            onClick={ dataValid }
+          >
             Cadastrar
           </button>
         </form>
       </div>
-      <div className="registerError">
+      <div data-testid="common_register__element-invalid_registaer">
         Erros de Cadastro
       </div>
     </div>
