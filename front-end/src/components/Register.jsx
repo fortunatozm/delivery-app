@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../componentsCss/register.css';
 import registerValidation from '../services/registerService';
 
@@ -33,6 +34,7 @@ function Registers() {
 
   const dataValid = async () => {
     const { email, name, password } = register;
+    console.log(register);
     const data = await registerValidation({ email, name, password });
     if (typeof data === 'string') {
       setRegister((prevRegister) => ({ ...prevRegister, error: data }));
@@ -90,14 +92,16 @@ function Registers() {
             />
           </label>
           <br />
-          <button
-            type="button"
-            data-testid="common_register__button-register"
-            onClick={ dataValid }
-            disabled={ register.boolButton }
-          >
-            Cadastrar
-          </button>
+          <Link to="/customer/products">
+            <button
+              type="button"
+              data-testid="common_register__button-register"
+              onClick={ dataValid }
+              disabled={ register.boolButton }
+            >
+              Cadastrar
+            </button>
+          </Link>
         </form>
       </div>
       <div data-testid="common_register__element-invalid_registaer">
