@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../componentsCss/register.css';
 import registerValidation from '../services/registerService';
 
 function Registers() {
-  const dataValid = async ({ target }) => {
-    console.log(target);
-    const dados = {
-      email: 'fortunato@hotmail.com',
-      name: 'Fortunato',
-      role: 'dados',
-      password: 'deucerto' };
-    const data = await registerValidation(dados);
+  const [register, setRegister] = useState({
+    name: '',
+    email: '',
+    password: '',
+    error: null,
+    role: '',
+  });
+
+  const dataValid = async () => {
+    const { email, name, role, password } = register;
+    const data = await registerValidation({ email, name, role, password });
+    console.log({ name, email, password });
     console.log(data);
+    if (typeof data === 'string') {
+      setRegister((prevRegister) => ({ ...prevRegister, error: data }));
+    } else {
+      setRegister((prevRegister) => ({ ...prevRegister, error: null }));
+    }
   };
 
   return (
@@ -29,6 +38,11 @@ function Registers() {
               data-testid="common_register__input-name"
               name="nome"
               placeholder="Seu nome"
+              value={ register.name }
+              onChange={ ({ target }) => {
+                const { value } = target;
+                setRegister((prevRegister) => ({ ...prevRegister, name: value }));
+              } }
             />
           </label>
           <br />
@@ -41,6 +55,11 @@ function Registers() {
               data-testid="common_register__input-email"
               name="email"
               placeholder="seu-email@site.com.br"
+              value={ register.email }
+              onChange={ ({ target }) => {
+                const { value } = target;
+                setRegister((prevRegister) => ({ ...prevRegister, email: value }));
+              } }
             />
           </label>
           <br />
@@ -54,6 +73,11 @@ function Registers() {
               id="senhaId"
               name="senha"
               placeholder="********"
+              value={ register.senha }
+              onChange={ ({ target }) => {
+                const { value } = target;
+                setRegister((prevRegister) => ({ ...prevRegister, password: value }));
+              } }
             />
           </label>
           <br />
@@ -67,7 +91,7 @@ function Registers() {
         </form>
       </div>
       <div data-testid="common_register__element-invalid_registaer">
-        Erros de Cadastro
+        { register.error }
       </div>
     </div>
   );
