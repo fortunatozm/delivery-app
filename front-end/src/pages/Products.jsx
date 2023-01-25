@@ -12,11 +12,11 @@ function Products() {
       <Navbar />
       {!isFetching && (
         <section>
-          {data.map(({ id, imageUrl, name, price }) => (
+          {data.map(({ id, urlImage, name, price }) => (
             <ProductCard
               key={ id }
               id={ id }
-              imageUrl={ imageUrl }
+              urlImage={ urlImage }
               name={ name }
               price={ price }
             />

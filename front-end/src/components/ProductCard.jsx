@@ -1,17 +1,17 @@
 import React from 'react';
 import { number, string } from 'prop-types';
 
-function ProductCard({ id, price, imageUrl, name }) {
+function ProductCard({ id, price, urlImage, name }) {
   return (
     <div>
       <div>
         <span data-testid={ `customer_products__element-card-price-${id}` }>
-          {price}
+          {`${price}`.replace('.', ',')}
         </span>
         <img
           data-testid={ `customer_products__img-card-bg-image-${id}` }
-          src={ name }
-          alt={ imageUrl }
+          src={ urlImage }
+          alt={ name }
         />
       </div>
       <div>
@@ -28,6 +28,7 @@ function ProductCard({ id, price, imageUrl, name }) {
           <input
             type="number"
             data-testid={ `customer_products__input-card-quantity-${id}` }
+            value={ 0 }
           />
           <button
             data-testid={ `customer_products__button-card-add-item-${id}` }
@@ -43,14 +44,14 @@ function ProductCard({ id, price, imageUrl, name }) {
 
 ProductCard.defaultProps = {
   price: '',
-  imageUrl: '',
+  urlImage: '',
   name: '',
 };
 
 ProductCard.propTypes = {
   id: number.isRequired,
   price: string,
-  imageUrl: string,
+  urlImage: string,
   name: string,
 };
 
