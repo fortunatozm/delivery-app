@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import postLogin from '../services/postLogin';
 import requests, { setTokenHeaders } from '../services/requests';
 
@@ -82,9 +82,11 @@ function LoginForm() {
       >
         Login
       </button>
-      <button type="button" data-testid="common_login__button-register">
-        Ainda não tenho conta
-      </button>
+      <Link to="/register">
+        <button type="button" data-testid="common_login__button-register">
+          Ainda não tenho conta
+        </button>
+      </Link>
       {errorText ? (
         <p data-testid="common_login__element-invalid-email">
           Email ou senha inválidos

@@ -32,7 +32,8 @@ const registerServicePost = async (data) => {
   const error = validateRegister(data);
   if (error.status) return error;
 
-  const { email, name, role, password } = data;
+  const role = data.role || 'customer';
+  const { email, name, password } = data;
 
   const isUserAlreadyRegistered = await newUserValidator(email, name);
   if (isUserAlreadyRegistered) {
