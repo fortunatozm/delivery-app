@@ -66,7 +66,7 @@ function Registers() {
           </button>
         </form>
       </div>
-      <div className="common_register__element-invalid_registaer">
+      <div data-testid="common_register__element-invalid_registaer">
         Erros de Cadastro
       </div>
     </div>
