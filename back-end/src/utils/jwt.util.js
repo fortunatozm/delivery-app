@@ -1,12 +1,21 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-const createToken = (data) => {
-  const token = jwt.sign({ data }, process.env.JWT_SECRET, {
-    expiresIn: '1y',
+const createToken = ({ email }) => {
+  const token = jwt.sign({ email }, 'secret_key', {
+    expiresIn: '7d',
     algorithm: 'HS256',
   });
   return token;
 };
 
-module.exports = { createToken };
+const authenticate = async (token) => {
+  try {
+    const payload = await jwt.verify(token, 'secret_key');
+    return payload;
+  } catch (error) {
+    return { status: 400, message: 'Token inválido.' };
+  }
+};
+
+module.exports = { createToken, authenticate };

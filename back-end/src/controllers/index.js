@@ -1,7 +1,7 @@
-const loginController = require('./login.controllers');
-const registerController = require('./register.controllers');
+const authController = require('./auth.controller');
+const productsController = require('./products.controllers');
 
 module.exports = {
-  loginController,
-  registerController,
+  authController,
+  productsController,
 };

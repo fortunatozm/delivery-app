@@ -13,7 +13,7 @@ function Registers() {
     const data = await registerValidation(dados);
     console.log(data);
   };
-
+  
   return (
     <div className="registerClass">
       <div className="paragrafoFrom">
@@ -51,6 +51,7 @@ function Registers() {
             <input
               type="password"
               data-testid="common_register__input-password"
+              id="senhaId"
               name="senha"
               placeholder="********"
             />
