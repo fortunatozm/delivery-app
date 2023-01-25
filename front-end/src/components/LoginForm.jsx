@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import postLogin from '../services/postLogin';
-import requests, { setTokenHeaders } from '../services/requests';
+import login from '../utils/login';
 
 function LoginForm() {
   const history = useHistory();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [errorText, setErrorText] = useState(false);
-  // const [token, setToken] = useState();
 
   const validateFormData = () => {
     const MIN_PASSWORD_SIZE = 6;
@@ -25,26 +23,14 @@ function LoginForm() {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const saveUser = async (token) => {
-    try {
-      const user = await requests.get.user();
-      localStorage.setItem('user', JSON.stringify({ ...user, token }));
-      return user;
-    } catch (err) {
-      console.error('Usuário não encontrado');
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       setErrorText(false);
-      const { token } = await postLogin(formData);
-      setTokenHeaders(token);
-      const { role } = await saveUser(token);
-      history.push(`/${role}/products`);
-    } catch (error) {
-      console.error('Email ou senha inválidos');
+      const userRole = await login(formData);
+      history.push(`/${userRole}/products`);
+    } catch (err) {
       setErrorText(true);
     }
   };
