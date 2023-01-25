@@ -8,14 +8,32 @@ function Registers() {
     email: '',
     password: '',
     error: null,
-    role: '',
+    boolButton: true,
   });
 
+  const onChangeRegisters = ({ target }) => {
+    const { name, value } = target;
+    setRegister((prevState) => ({ ...prevState, [name]: value }));
+    console.log(register.name);
+
+    const MAX_NAME_LENGTH = 12;
+    const MAX_PASSWORD_LENGTH = 5;
+    const { email, name: nome, password } = register;
+
+    const isValidEmail = /\S+@\S+\.\S+/.test(email);
+
+    if (isValidEmail
+      && nome.length >= MAX_NAME_LENGTH
+      && password.length >= MAX_PASSWORD_LENGTH) {
+      setRegister((prevRegister) => ({ ...prevRegister, boolButton: false }));
+    } else {
+      setRegister((prevRegister) => ({ ...prevRegister, boolButton: true }));
+    }
+  };
+
   const dataValid = async () => {
-    const { email, name, role, password } = register;
-    const data = await registerValidation({ email, name, role, password });
-    console.log({ name, email, password });
-    console.log(data);
+    const { email, name, password } = register;
+    const data = await registerValidation({ email, name, password });
     if (typeof data === 'string') {
       setRegister((prevRegister) => ({ ...prevRegister, error: data }));
     } else {
@@ -36,13 +54,10 @@ function Registers() {
             <input
               type="text"
               data-testid="common_register__input-name"
-              name="nome"
+              name="name"
               placeholder="Seu nome"
               value={ register.name }
-              onChange={ ({ target }) => {
-                const { value } = target;
-                setRegister((prevRegister) => ({ ...prevRegister, name: value }));
-              } }
+              onChange={ onChangeRegisters }
             />
           </label>
           <br />
@@ -56,10 +71,7 @@ function Registers() {
               name="email"
               placeholder="seu-email@site.com.br"
               value={ register.email }
-              onChange={ ({ target }) => {
-                const { value } = target;
-                setRegister((prevRegister) => ({ ...prevRegister, email: value }));
-              } }
+              onChange={ onChangeRegisters }
             />
           </label>
           <br />
@@ -71,13 +83,10 @@ function Registers() {
               type="password"
               data-testid="common_register__input-password"
               id="senhaId"
-              name="senha"
+              name="password"
               placeholder="********"
-              value={ register.senha }
-              onChange={ ({ target }) => {
-                const { value } = target;
-                setRegister((prevRegister) => ({ ...prevRegister, password: value }));
-              } }
+              value={ register.password }
+              onChange={ onChangeRegisters }
             />
           </label>
           <br />
@@ -85,6 +94,7 @@ function Registers() {
             type="button"
             data-testid="common_register__button-register"
             onClick={ dataValid }
+            disabled={ register.boolButton }
           >
             Cadastrar
           </button>
