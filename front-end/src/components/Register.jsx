@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import '../componentsCss/register.css';
 import registerValidation from '../services/registerService';
+import login from '../utils/login';
 
 function Registers() {
+  const history = useHistory();
   const [register, setRegister] = useState({
     name: '',
     email: '',
@@ -11,7 +13,7 @@ function Registers() {
     error: null,
     boolButton: true,
   });
-  // n0sssa
+
   const onChangeRegisters = ({ target }) => {
     const { name, value } = target;
     setRegister((prevState) => ({ ...prevState, [name]: value }));
@@ -32,6 +34,20 @@ function Registers() {
     }
   };
 
+  const handleSubmit = async () => {
+    // e.preventDefault();
+
+    try {
+      const userRole = await login({
+        email: register.email,
+        password: register.password });
+
+      history.push(`/${userRole}/products`);
+    } catch (err) {
+      return err.message;
+    }
+  };
+
   const dataValid = async () => {
     const { email, name, password } = register;
     console.log(register);
@@ -40,6 +56,7 @@ function Registers() {
       setRegister((prevRegister) => ({ ...prevRegister, error: data }));
     } else {
       setRegister((prevRegister) => ({ ...prevRegister, error: null }));
+      handleSubmit();
     }
   };
 
@@ -92,19 +109,17 @@ function Registers() {
             />
           </label>
           <br />
-          <Link to="/customer/products">
-            <button
-              type="button"
-              data-testid="common_register__button-register"
-              onClick={ dataValid }
-              disabled={ register.boolButton }
-            >
-              Cadastrar
-            </button>
-          </Link>
+          <button
+            type="button"
+            data-testid="common_register__button-register"
+            onClick={ dataValid }
+            disabled={ register.boolButton }
+          >
+            Cadastrar
+          </button>
         </form>
       </div>
-      <div data-testid="common_register__element-invalid_registaer">
+      <div data-testid="common_register__element-invalid_register">
         { register.error }
       </div>
     </div>
