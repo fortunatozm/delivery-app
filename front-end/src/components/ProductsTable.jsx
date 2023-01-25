@@ -1,6 +1,8 @@
 import { arrayOf, shape } from 'prop-types';
 
-function ProductsTable({ products }) {
+function ProductsTable() {
+  const products = JSON.parse(localStorage.getItem('cart'));
+
   return (
     <table>
       <thead>
@@ -14,7 +16,7 @@ function ProductsTable({ products }) {
         </tr>
       </thead>
       <tbody>
-        {products.map(({ id, price, name }, index) => (
+        {products.map(({ id, price, name, quantity }, index) => (
           <tr key={ id }>
             <td
               data-testid={
@@ -31,7 +33,7 @@ function ProductsTable({ products }) {
             <td
               data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
             >
-              0
+              {quantity}
             </td>
             <td
               data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
