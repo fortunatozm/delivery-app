@@ -1,22 +1,70 @@
-import React, { useState } from 'react';
-import { number, string } from 'prop-types';
-import setStorage from '../storage/localStorage';
+import React, { useState, useEffect } from 'react';
+import { number, string, func } from 'prop-types';
+import handleTotal from '../utils/total';
+// import setStorage from '../storage/localStorage';
 
-function ProductCard({ id, price, urlImage, name }) {
+function ProductCard({ id, price, urlImage, name, handleResult }) {
   const [product, setProduct] = useState(0);
-  const handleClickAdd = (idProduct, priceProduct, nameProduct) => {
+  const [onOff, setOnOff] = useState(false);
+
+  useEffect(() => {
+    console.log(onOff);
+    handleResult(handleTotal());
+  }, [onOff]);
+
+  const handleClickAdd = () => {
     setProduct(product + 1);
-    setStorage(idProduct, priceProduct, nameProduct, product);
+
+    const prods = JSON.parse(localStorage.getItem('cart'));
+    const clickedProd = prods.find((prod) => prod.id === id);
+    clickedProd.qnt = product + 1;
+    clickedProd.subTotal = clickedProd.qnt * clickedProd.price;
+
+    const filtered = prods.filter((prod) => prod.id !== id);
+    filtered.push(clickedProd);
+
+    localStorage.setItem('cart', JSON.stringify(prods));
+    setOnOff(!onOff);
   };
+
   const handleClickRemove = () => {
     setProduct(product - 1);
     if (product <= 0) {
       setProduct(0);
     }
+
+    const prods = JSON.parse(localStorage.getItem('cart'));
+    const clickedProd = prods.find((prod) => prod.id === id);
+    clickedProd.qnt = product - 1;
+    clickedProd.subTotal = clickedProd.qnt * clickedProd.price;
+
+    if (clickedProd.qnt <= 0) {
+      clickedProd.qnt = 0;
+    }
+
+    const filtered = prods.filter((prod) => prod.id !== id);
+    filtered.push(clickedProd);
+    localStorage.setItem('cart', JSON.stringify(prods));
+    setOnOff(!onOff);
   };
+
   const handleValue = ({ target }) => {
     setProduct(Number(target.value));
+
+    const prods = JSON.parse(localStorage.getItem('cart'));
+    const clickedProd = prods.find((prod) => prod.id === id);
+    clickedProd.qnt = product;
+
+    if (clickedProd.qnt <= 0) {
+      clickedProd.qnt = 0;
+    }
+
+    const filtered = prods.filter((prod) => prod.id !== id);
+    filtered.push(clickedProd);
+    localStorage.setItem('cart', JSON.stringify(prods));
+    setOnOff(!onOff);
   };
+
   return (
     <div>
       <div>
@@ -50,7 +98,7 @@ function ProductCard({ id, price, urlImage, name }) {
           <button
             data-testid={ `customer_products__button-card-add-item-${id}` }
             type="button"
-            onClick={ () => handleClickAdd(id, price, name) }
+            onClick={ () => handleClickAdd() }
           >
             +
           </button>
@@ -71,6 +119,7 @@ ProductCard.propTypes = {
   price: string,
   urlImage: string,
   name: string,
+  handleResult: func.isRequired,
 };
 
 export default ProductCard;
