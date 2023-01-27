@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import ProductsTable from '../components/ProductsTable';
 import formatToBRL from '../utils/formatToBRL';
+import useApiGet from '../hooks/useApiGet';
 
 function Checkout() {
+  const { data, isFetching } = useApiGet('seller');
   const [products, setProducts] = useState([]);
   const [removeItem, setRemoveItem] = useState(false);
 
@@ -39,7 +41,10 @@ function Checkout() {
         <section>
           <h1>Detalhes e Endereço para Entrega</h1>
           <select data-testid="customer_checkout__select-seller">
-            <option value="">vendedores</option>
+            {!isFetching ? data.map((seller) => (
+              <option value="" key={ seller.id }>{seller.name}</option>
+            )) : null}
+
           </select>
           <input
             placeholder="Endereço"
