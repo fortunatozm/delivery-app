@@ -10,7 +10,7 @@ function Products() {
   const { data, errorStatus, isFetching } = useApiGet('products');
   useLoginValidator(errorStatus);
   const history = useHistory();
-  // const [onOff, setOnOff] = useState(false);
+
   const [result, setResult] = useState(0);
 
   const handleLocalStorage = () => {
@@ -31,16 +31,10 @@ function Products() {
     }
   }, [isFetching]);
 
-  // const [produtos, setProdutos] = useState([]);
-
-  // const totalResult = (r) => {
-  //   setResult(r);
-  // };
-
+  const resultFixed = `${result.toFixed(2)}`.replace('.', ',');
   return (
     <div>
       <Navbar />
-      {/* {!isFetching ? handleLocalStorage() : null} */}
       {!isFetching && (
         <section>
           {data.map(({ id, urlImage, name, price }) => (
@@ -62,12 +56,13 @@ function Products() {
         data-testid="customer_products__button-cart"
         type="button"
         onClick={ () => history.push('/customer/checkout') }
+        disabled={ !result }
       >
         {' '}
         Ver Carrinho:
         {' '}
         <p data-testid="customer_products__checkout-bottom-value">
-          {result.toFixed(2)}
+          {resultFixed}
         </p>
         {' '}
 

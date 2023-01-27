@@ -6,21 +6,27 @@ import { number, string, func } from 'prop-types';
 function ProductCard({ id, price, urlImage, name, result, setResult }) {
   const [product, setProduct] = useState(0);
 
+  const setTotal = (prods) => {
+    prods = JSON.parse(localStorage.getItem('cart'));
+    const newTotal = prods.reduce((acc, curr) => acc + curr.subTotal, 0);
+    setResult(newTotal);
+  };
   const handleClickAdd = () => {
     setProduct(product + 1);
 
-    const prods = JSON.parse(localStorage.getItem('cart'));
+    let prods = JSON.parse(localStorage.getItem('cart'));
     // console.log(prods);
     const clickedProd = prods.find((prod) => prod.id === id);
     clickedProd.qnt = product + 1;
+    console.log(result);
     clickedProd.subTotal = clickedProd.qnt * clickedProd.price;
 
     const filtered = prods.filter((prod) => prod.id !== id);
     filtered.push(clickedProd);
-    console.log(filtered);
 
     localStorage.setItem('cart', JSON.stringify(filtered));
-    setResult(result + clickedProd.subTotal);
+    prods = JSON.parse(localStorage.getItem('cart'));
+    setTotal(prods);
   };
 
   const handleClickRemove = () => {
@@ -29,7 +35,7 @@ function ProductCard({ id, price, urlImage, name, result, setResult }) {
       setProduct(0);
     }
 
-    const prods = JSON.parse(localStorage.getItem('cart'));
+    let prods = JSON.parse(localStorage.getItem('cart'));
     const clickedProd = prods.find((prod) => prod.id === id);
     clickedProd.qnt = product - 1;
     clickedProd.subTotal = clickedProd.qnt * clickedProd.price;
@@ -41,15 +47,18 @@ function ProductCard({ id, price, urlImage, name, result, setResult }) {
     const filtered = prods.filter((prod) => prod.id !== id);
     filtered.push(clickedProd);
     localStorage.setItem('cart', JSON.stringify(filtered));
+    prods = JSON.parse(localStorage.getItem('cart'));
+
+    setTotal(prods);
   };
 
   const handleValue = ({ target }) => {
-    console.log(target.value);
     setProduct(Number(target.value));
 
-    const prods = JSON.parse(localStorage.getItem('cart'));
+    let prods = JSON.parse(localStorage.getItem('cart'));
     const clickedProd = prods.find((prod) => prod.id === id);
     clickedProd.qnt = Number(target.value);
+    clickedProd.subTotal = clickedProd.qnt * clickedProd.price;
 
     if (clickedProd.qnt <= 0) {
       clickedProd.qnt = 0;
@@ -58,6 +67,8 @@ function ProductCard({ id, price, urlImage, name, result, setResult }) {
     const filtered = prods.filter((prod) => prod.id !== id);
     filtered.push(clickedProd);
     localStorage.setItem('cart', JSON.stringify(filtered));
+    prods = JSON.parse(localStorage.getItem('cart'));
+    setTotal(prods);
   };
 
   return (
