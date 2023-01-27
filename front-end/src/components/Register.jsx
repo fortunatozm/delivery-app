@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../componentsCss/register.css';
 import registerValidation from '../services/registerService';
+import login from '../utils/login';
 
 function Registers() {
+  const history = useHistory();
   const [register, setRegister] = useState({
     name: '',
     email: '',
@@ -31,13 +34,29 @@ function Registers() {
     }
   };
 
+  const handleSubmit = async () => {
+    // e.preventDefault();
+
+    try {
+      const userRole = await login({
+        email: register.email,
+        password: register.password });
+
+      history.push(`/${userRole}/products`);
+    } catch (err) {
+      return err.message;
+    }
+  };
+
   const dataValid = async () => {
     const { email, name, password } = register;
+    console.log(register);
     const data = await registerValidation({ email, name, password });
     if (typeof data === 'string') {
       setRegister((prevRegister) => ({ ...prevRegister, error: data }));
     } else {
       setRegister((prevRegister) => ({ ...prevRegister, error: null }));
+      handleSubmit();
     }
   };
 
@@ -100,7 +119,7 @@ function Registers() {
           </button>
         </form>
       </div>
-      <div data-testid="common_register__element-invalid_registaer">
+      <div data-testid="common_register__element-invalid_register">
         { register.error }
       </div>
     </div>
