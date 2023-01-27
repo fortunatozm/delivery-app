@@ -7,7 +7,7 @@ const checkoutServiceGet = async () => {
     },
     attributes: { exclude: 'password' },
   });
-  console.log('passou service');
+
   return {
     status: 200,
     message: result,
