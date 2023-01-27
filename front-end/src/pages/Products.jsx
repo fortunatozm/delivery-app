@@ -47,7 +47,6 @@ function Products() {
               price={ price }
               result={ result }
               setResult={ setResult }
-              // handleResult={ totalResult }
             />
           ))}
         </section>

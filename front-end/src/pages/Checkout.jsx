@@ -1,12 +1,18 @@
+import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import ProductsTable from '../components/ProductsTable';
 import formatToBRL from '../utils/formatToBRL';
 
 function Checkout() {
-  const products = JSON.parse(localStorage.getItem('cart')) || [];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const cartItems = JSON.parse(localStorage.getItem('cart'));
+    setProducts(cartItems.filter(({ qnt }) => qnt > 0));
+  }, []);
 
   const totalPrice = products.reduce(
-    (acc, curr) => acc + curr.quantity * curr.price,
+    (acc, curr) => acc + curr.qnt * curr.price,
     0,
   );
 
@@ -16,7 +22,7 @@ function Checkout() {
       <div>
         <section>
           <h1>Finalizar pedido</h1>
-          <ProductsTable />
+          <ProductsTable products={ products } />
           <div>
             <p data-testid="customer_checkout__element-order-total-price">
               {`Total: ${formatToBRL(totalPrice)}`}

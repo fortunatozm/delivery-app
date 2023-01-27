@@ -1,8 +1,8 @@
+import { arrayOf, shape } from 'prop-types';
 import formatToBRL from '../utils/formatToBRL';
+import resultFixed from '../utils/resultFixed';
 
-function ProductsTable() {
-  const products = JSON.parse(localStorage.getItem('cart')) || [];
-
+function ProductsTable({ products }) {
   return (
     <table>
       <thead>
@@ -16,14 +16,14 @@ function ProductsTable() {
         </tr>
       </thead>
       <tbody>
-        {products.map(({ id, price, name, quantity }, index) => (
+        {products.map(({ id, price, name, qnt }, index) => (
           <tr key={ id }>
             <td
               data-testid={
                 `customer_checkout__element-order-table-item-number-${index}`
               }
             >
-              {id}
+              {index + 1}
             </td>
             <td
               data-testid={ `customer_checkout__element-order-table-name-${index}` }
@@ -33,17 +33,17 @@ function ProductsTable() {
             <td
               data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
             >
-              {quantity}
+              {qnt}
             </td>
             <td
               data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
             >
-              {formatToBRL(price)}
+              {`${price.replace('.', ',')}`}
             </td>
             <td
               data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
             >
-              {formatToBRL(quantity * price)}
+              {formatToBRL(qnt * price)}
             </td>
             <td>
               <button
@@ -59,5 +59,9 @@ function ProductsTable() {
     </table>
   );
 }
+
+ProductsTable.propTypes = {
+  products: arrayOf(shape({})).isRequired,
+};
 
 export default ProductsTable;
