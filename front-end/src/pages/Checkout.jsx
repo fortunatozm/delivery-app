@@ -5,11 +5,14 @@ import formatToBRL from '../utils/formatToBRL';
 
 function Checkout() {
   const [products, setProducts] = useState([]);
+  const [removeItem, setRemoveItem] = useState(false);
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem('cart'));
-    setProducts(cartItems.filter(({ qnt }) => qnt > 0));
-  }, []);
+
+    const filteredCart = cartItems.filter(({ qnt }) => qnt > 0);
+    setProducts(filteredCart);
+  }, [removeItem]);
 
   const totalPrice = products.reduce(
     (acc, curr) => acc + curr.qnt * curr.price,
@@ -22,7 +25,11 @@ function Checkout() {
       <div>
         <section>
           <h1>Finalizar pedido</h1>
-          <ProductsTable products={ products } />
+          <ProductsTable
+            products={ products }
+            setRemoveItem={ setRemoveItem }
+            removeItem={ removeItem }
+          />
           <div>
             <p data-testid="customer_checkout__element-order-total-price">
               {`Total: ${formatToBRL(totalPrice)}`}

@@ -1,8 +1,17 @@
-import { arrayOf, shape } from 'prop-types';
+import { arrayOf, shape, func, bool } from 'prop-types';
 import formatToBRL from '../utils/formatToBRL';
-import resultFixed from '../utils/resultFixed';
 
-function ProductsTable({ products }) {
+function ProductsTable({ products, setRemoveItem, removeItem }) {
+  const removeItemFromCart = (id) => {
+    const cartItems = JSON.parse(localStorage.getItem('cart'));
+
+    const updatedProduct = cartItems.find((product) => product.id === id);
+    updatedProduct.qnt = 0;
+
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    setRemoveItem(!removeItem);
+  };
+
   return (
     <table>
       <thead>
@@ -49,6 +58,7 @@ function ProductsTable({ products }) {
               <button
                 data-testid={ `customer_checkout__element-order-table-remove-${index}` }
                 type="button"
+                onClick={ () => removeItemFromCart(id) }
               >
                 Remover
               </button>
@@ -62,6 +72,8 @@ function ProductsTable({ products }) {
 
 ProductsTable.propTypes = {
   products: arrayOf(shape({})).isRequired,
+  setRemoveItem: func.isRequired,
+  removeItem: bool.isRequired,
 };
 
 export default ProductsTable;
