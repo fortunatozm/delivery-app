@@ -1,12 +1,8 @@
-import axios from 'axios';
-
-const instance = axios.create({
-  baseURL: 'http://localhost:3001/',
-});
+import api from '../lib/axios';
 
 const registerValidation = async (data) => {
   try {
-    const dados = await instance.post('register', data);
+    const dados = await api.post('register', data);
     return dados;
   } catch (error) {
     return error.response.data.message;
