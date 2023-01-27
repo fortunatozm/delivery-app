@@ -3,7 +3,7 @@ import { number, string, func } from 'prop-types';
 // import handleTotal from '../utils/total';
 // import setStorage from '../storage/localStorage';
 
-function ProductCard({ id, price, urlImage, name, result, setResult }) {
+function ProductCard({ id, price, urlImage, name, setResult }) {
   const [product, setProduct] = useState(0);
 
   const setTotal = (prods) => {
@@ -15,10 +15,9 @@ function ProductCard({ id, price, urlImage, name, result, setResult }) {
     setProduct(product + 1);
 
     let prods = JSON.parse(localStorage.getItem('cart'));
-    // console.log(prods);
     const clickedProd = prods.find((prod) => prod.id === id);
     clickedProd.qnt = product + 1;
-    console.log(result);
+    // console.log(result);
     clickedProd.subTotal = clickedProd.qnt * clickedProd.price;
 
     const filtered = prods.filter((prod) => prod.id !== id);
@@ -125,7 +124,6 @@ ProductCard.propTypes = {
   price: string,
   urlImage: string,
   name: string,
-  result: number.isRequired,
   setResult: func.isRequired,
 };
 

@@ -3,7 +3,6 @@ const handleTotal = () => {
   const subTotalArray = prods.map((prod) => prod.subTotal);
   const total = subTotalArray.reduce((acc, curr) => acc + curr, 0);
 
-  console.log(subTotalArray);
   return total;
 };
 
