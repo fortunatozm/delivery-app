@@ -49,10 +49,10 @@ const registerServicePost = async (data) => {
 
 const getUser = async (authToken) => {
   const validateUser = await authenticate(authToken);
-  if (validateUser.status) return validateUser;
+  // if (validateUser.status) return validateUser;
 
   const { email } = validateUser;
-
+  console.log(validateUser);
   const user = await User.findOne({
     where: { email },
   });
@@ -64,6 +64,7 @@ const getUser = async (authToken) => {
   return {
     status: null,
     message: {
+      id: user.id,
       name: user.name,
       email,
       role: user.role,

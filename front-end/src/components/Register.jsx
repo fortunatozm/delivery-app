@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../componentsCss/register.css';
-import registerValidation from '../services/registerService';
+import { registerValidation } from '../services/otherService';
 
 function Registers() {
   const [register, setRegister] = useState({
@@ -34,7 +34,6 @@ function Registers() {
 
   const dataValid = async () => {
     const { email, name, password } = register;
-    console.log(register);
     const data = await registerValidation({ email, name, password });
     if (typeof data === 'string') {
       setRegister((prevRegister) => ({ ...prevRegister, error: data }));

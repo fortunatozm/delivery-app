@@ -22,6 +22,7 @@ const registerControllerPost = async (req, res) => {
 
 const userDataGet = async (req, res) => {
   const authToken = req.headers.authorization;
+  console.log(authToken);
   const { status, message } = await authService.getUser(authToken);
 
   if (status) {

@@ -27,6 +27,7 @@ function LoginForm() {
 
   const saveUser = async (token) => {
     try {
+      console.log(token);
       const user = await requests.get.user();
       localStorage.setItem('user', JSON.stringify({ ...user, token }));
       return user;
@@ -40,6 +41,7 @@ function LoginForm() {
     try {
       setErrorText(false);
       const { token } = await postLogin(formData);
+      // console.log(token);
       setTokenHeaders(token);
       const { role } = await saveUser(token);
       history.push(`/${role}/products`);

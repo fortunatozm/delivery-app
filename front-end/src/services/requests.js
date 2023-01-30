@@ -14,6 +14,10 @@ const requests = {
       const { data } = await api.get('/me');
       return data;
     },
+    pedidos: async () => {
+      const { data } = await api.get('/pedidos');
+      return data;
+    },
   },
 };
 
