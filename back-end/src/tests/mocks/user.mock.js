@@ -9,7 +9,13 @@ const newUserMock = {
   password: "senhaaleatoria",
 };
 
+const userMock = {
+  id: 1,
+  ...newUserMock,
+}
+
 module.exports = {
   newUserResponseMock,
   newUserMock,
+  userMock,
 };

@@ -18,6 +18,10 @@ const requests = {
       const { data } = await api.get('/pedidos');
       return data;
     },
+    seller: async () => {
+      const { data } = await api.get('/customer/checkout');
+      return data;
+    },
   },
 };
 

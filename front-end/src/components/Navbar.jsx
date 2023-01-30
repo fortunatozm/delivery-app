@@ -24,14 +24,14 @@ function Navbar() {
         <button
           data-testid="customer_products__element-navbar-link-products"
           type="button"
-          onClick={ () => routeChange('produtos') }
+          onClick={ () => routeChange('products') }
         >
           Produtos
         </button>
         <button
           data-testid="customer_products__element-navbar-link-orders"
           type="button"
-          onClick={ () => routeChange('pedidos') }
+          onClick={ () => routeChange('checkout') }
         >
           Meus pedidos
         </button>
