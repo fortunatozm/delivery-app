@@ -5,12 +5,8 @@ const getSalesbyUserId = async (id) => {
     const sales = await Sale.findAll({ where: { userId: id } });
     if (sales) {
       return { status: 200, message: sales };
-    } else {
-      return { status: 204, message: 'Usuário não fez nenhum pedido' };
-    }
-  } else {
-    return { status: 400, message: 'Usuário não reconhecido' };
-  }
+    } return { status: 204, message: 'Usuário não fez nenhum pedido' };
+    } return { status: 400, message: 'Usuário não reconhecido' };
 };
 
 module.exports = getSalesbyUserId;
