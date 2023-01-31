@@ -15,6 +15,7 @@ const checkoutServiceGet = async () => {
 };
 
 const checkoutServicePost = async (data) => {
+  console.log(data);
   const sale = await Sale.create({
     userId: data.userId,
     sellerId: data.sellerId,
