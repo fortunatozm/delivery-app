@@ -4,10 +4,6 @@ const saleMiddleware = require('../middlewares/validate.sale');
 
 const salesRoutes = Router();
 
-salesRoutes.get(
-  '/seller/:id',
-  saleMiddleware,
-  salesController.salesControllerBySellerId,
-);
+salesRoutes.get('/', saleMiddleware, salesController.salesControllerBySellerId);
 
 module.exports = salesRoutes;
