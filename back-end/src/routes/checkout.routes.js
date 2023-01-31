@@ -10,6 +10,6 @@ checkoutRoutes.post(
   saleMiddleware,
   checkoutController.checkoutControllerPost,
 );
-checkoutRoutes.get('/orders/:id');
+checkoutRoutes.get('/orders/:id', checkoutController.orderControllerGet);
 
 module.exports = checkoutRoutes;
