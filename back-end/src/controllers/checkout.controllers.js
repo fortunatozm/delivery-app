@@ -6,4 +6,10 @@ const checkoutControllerGet = async (_req, res) => {
   return res.status(result.status).json(result.message);
 };
 
-module.exports = { checkoutControllerGet };
+
+const checkoutControllerPost = async (req, res) => {
+  const data = req.body
+const result = await checkoutService.checkoutServicePost(data)
+return res.status(result.status).json({id: result.message})
+}
+module.exports = { checkoutControllerGet, checkoutControllerPost };

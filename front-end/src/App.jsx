@@ -15,6 +15,7 @@ function App() {
       <Route path="/customer/products" component={ Products } />
       <Route exact path="/customer/pedidos" component={ ClienteMeusPedidos } />
       <Route path="/customer/checkout" component={ Checkout } />
+      <Route path="/customer/orders/:id" />
     </Switch>
   );
 }
