@@ -5,6 +5,7 @@ import Registers from './components/Register';
 import Products from './pages/Products';
 import ClienteMeusPedidos from './components/ClientePedidos';
 import Checkout from './pages/Checkout';
+import AdmGerenciamento from './components/AdmGerenciamento';
 
 function App() {
   return (
@@ -15,7 +16,11 @@ function App() {
       <Route path="/customer/products" component={ Products } />
       <Route exact path="/customer/pedidos" component={ ClienteMeusPedidos } />
       <Route path="/customer/checkout" component={ Checkout } />
+
       <Route path="/customer/orders/:id" />
+
+      <Route path="/admin/manage" component={ AdmGerenciamento } />
+
     </Switch>
   );
 }

@@ -17,7 +17,6 @@ function Registers() {
   const onChangeRegisters = ({ target }) => {
     const { name, value } = target;
     setRegister((prevState) => ({ ...prevState, [name]: value }));
-    console.log(register.name);
 
     const MAX_NAME_LENGTH = 12;
     const MAX_PASSWORD_LENGTH = 5;

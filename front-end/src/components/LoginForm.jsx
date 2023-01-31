@@ -25,11 +25,14 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       setErrorText(false);
       const userRole = await login(formData);
-      history.push(`/${userRole}/products`);
+      if (userRole === 'administrator') {
+        history.push('/admin/manage');
+      } else {
+        history.push(`/${userRole}/products`);
+      }
     } catch (err) {
       setErrorText(true);
     }
