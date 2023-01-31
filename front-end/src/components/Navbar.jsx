@@ -1,7 +1,8 @@
+import { bool } from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-function Navbar() {
+function Navbar({ isSeller }) {
   const history = useHistory();
   const [user, setUser] = useState({});
 
@@ -28,13 +29,15 @@ function Navbar() {
         >
           Produtos
         </button>
-        <button
-          data-testid="customer_products__element-navbar-link-orders"
-          type="button"
-          onClick={ () => routeChange('checkout') }
-        >
-          Meus pedidos
-        </button>
+        {!isSeller && (
+          <button
+            data-testid="customer_products__element-navbar-link-orders"
+            type="button"
+            onClick={ () => routeChange('checkout') }
+          >
+            Meus pedidos
+          </button>
+        )}
         <p data-testid="customer_products__element-navbar-user-full-name">
           {user.name}
         </p>
@@ -49,5 +52,13 @@ function Navbar() {
     </header>
   );
 }
+
+Navbar.defaultProps = {
+  isSeller: false,
+};
+
+Navbar.propTypes = {
+  isSeller: bool,
+};
 
 export default Navbar;
