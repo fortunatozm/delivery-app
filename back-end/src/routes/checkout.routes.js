@@ -5,6 +5,11 @@ const saleMiddleware = require('../middlewares/validate.sale');
 const checkoutRoutes = Router();
 
 checkoutRoutes.get('/checkout', checkoutController.checkoutControllerGet);
-checkoutRoutes.post('/orders', saleMiddleware, checkoutController.checkoutControllerPost)
-checkoutRoutes.get('/orders/:id')
+checkoutRoutes.post(
+  '/orders',
+  saleMiddleware,
+  checkoutController.checkoutControllerPost,
+);
+checkoutRoutes.get('/orders/:id');
+
 module.exports = checkoutRoutes;

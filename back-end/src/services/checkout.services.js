@@ -1,5 +1,4 @@
 const { User, Sale, SaleProduct } = require('../database/models');
-// const { createToken } = require('../utils/jwt.util');
 
 const checkoutServiceGet = async () => {
   const result = await User.findAll({
@@ -16,44 +15,25 @@ const checkoutServiceGet = async () => {
 };
 
 const checkoutServicePost = async (data) => {
-  const { 
-    userId, 
-    sellerId,
-    totalPrice,
-    deliveryAddress,
-    deliveryNumber,
-    status,
-    products,
-  } = data
-  // const novaData = new Date(saleDate);
-  // console.log(novaData)
-  
-
-  
   const sale = await Sale.create({
-    userId, 
-    sellerId,
-    totalPrice,
-    deliveryAddress,
-    deliveryNumber,
+    userId: data.userId,
+    sellerId: data.sellerId,
+    totalPrice: data.totalPrice,
+    deliveryAddress: data.deliveryAddress,
+    deliveryNumber: data.deliveryNumber,
     saleDate: new Date(),
-    status
+    status: data.status,
   });
-  
-  // const result = await Sale.findByPk(sale)
-  // console.log(sale.id)
-  try{ 
-    products.forEach((item) => {
-    SaleProduct.create({ saleId: sale.id, productId: item.productId, quantity: item.quantity })
-  })}catch(error){
+
+  try {
+    data.products.forEach(({ productId, quantity }) => {
+      SaleProduct.create({ saleId: sale.id, productId, quantity });
+    });
+  } catch (error) {
     console.log(error);
   }
 
-  return {
-    status: 201,
-    message: sale.id
-  }
-
-}
+  return { status: 201, message: sale.id };
+};
 
 module.exports = { checkoutServiceGet, checkoutServicePost };
