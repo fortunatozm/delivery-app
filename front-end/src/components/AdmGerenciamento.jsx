@@ -16,7 +16,7 @@ function AdmGerenciamento() {
     setAdminReg((prevState) => ({ ...prevState, [name]: value }));
 
     const MAX_NAME_LENGTH = 12;
-    const MAX_PASSWORD_LENGTH = 5;
+    const MAX_PASSWORD_LENGTH = 6;
     const { email, name: nome, password } = adminReg;
 
     const isValidEmail = /\S+@\S+\.\S+/.test(email);
@@ -33,6 +33,12 @@ function AdmGerenciamento() {
   const dataValid = async () => {
     const { email, name, role, password } = adminReg;
     const data = await registerValidation({ email, name, role, password });
+    setAdminReg((prevState) => ({ ...prevState,
+      name: '',
+      email: '',
+      role: 'customer',
+      password: '',
+      boolButton: true }));
     if (typeof data === 'string') {
       setAdminReg((prevRegister) => ({ ...prevRegister,
         error: data }));
@@ -100,7 +106,6 @@ function AdmGerenciamento() {
             id="TipoId"
             name="role"
             value={ adminReg.role }
-            // defaultValue="customer"
             onChange={ onChangeRegisters }
           >
             <option value="seller">
