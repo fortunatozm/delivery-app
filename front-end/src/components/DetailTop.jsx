@@ -5,7 +5,7 @@ import formatDate from '../utils/formatDate';
 
 function DetailTop() {
   const { id } = useParams();
-  const { data: dataOrder, isFetching: isFetchOrders } = useApiGet('orders', id);
+  const { data: dataOrder } = useApiGet('orders', id);
   const { data, isFetching } = useApiGet('seller');
   const { sellerId, saleDate, status, id: idOrders } = dataOrder[0];
   const sellerData = data.find((seller) => seller.id === sellerId);
