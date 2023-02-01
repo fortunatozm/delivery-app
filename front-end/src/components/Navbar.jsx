@@ -33,7 +33,7 @@ function Navbar({ isSeller }) {
           <button
             data-testid="customer_products__element-navbar-link-orders"
             type="button"
-            onClick={ () => routeChange('orders') }
+            onClick={ () => routeChange('/customer/orders') }
           >
             Meus pedidos
           </button>
