@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { func } from 'prop-types';
+import { Link } from 'react-router-dom';
 import login from '../utils/login';
 
-function LoginForm() {
-  const history = useHistory();
+function LoginForm({ redirectByRole }) {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [errorText, setErrorText] = useState(false);
@@ -21,19 +21,6 @@ function LoginForm() {
 
   const handleChange = ({ target: { name, value } }) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const redirectByRole = (role) => {
-    switch (role) {
-    case 'admin':
-      history.push('/admin/manage');
-      break;
-    case 'seller':
-      history.push('/seller/orders');
-      break;
-    default:
-      history.push('/customer/products');
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -93,5 +80,9 @@ function LoginForm() {
     </form>
   );
 }
+
+LoginForm.propTypes = {
+  redirectByRole: func.isRequired,
+};
 
 export default LoginForm;
