@@ -1,7 +1,6 @@
-const { getSalesbyUserId } = require('../services');
 // const { createToken } = require('../utils/jwt.util');
 const { getUser } = require('../services/auth.services');
-const { getSalesBySellerId } = require('../services/sales.service');
+const { getSalesBySellerId, getSalesbyUserId } = require('../services/sales.service');
 // const jwt = require('jsonwebtoken');
 
 // Cliente Zé Birita
