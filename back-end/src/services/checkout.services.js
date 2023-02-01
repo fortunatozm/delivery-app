@@ -1,4 +1,4 @@
-const { User, Sale, SaleProduct } = require('../database/models');
+const { User, Sale, Product, SaleProduct } = require('../database/models');
 
 const checkoutServiceGet = async () => {
   const result = await User.findAll({
@@ -15,6 +15,7 @@ const checkoutServiceGet = async () => {
 };
 
 const checkoutServicePost = async (data) => {
+  console.log(data);
   const sale = await Sale.create({
     userId: data.userId,
     sellerId: data.sellerId,
@@ -36,4 +37,16 @@ const checkoutServicePost = async (data) => {
   return { status: 201, message: sale.id };
 };
 
-module.exports = { checkoutServiceGet, checkoutServicePost };
+const orderServiceGet = async (data) => {
+  const sales = await Sale.findAll({
+    where: {
+      id: data,
+    },
+      include: [{ model: Product, as: 'products' }],
+  });
+  console.log(sales);
+
+  return { status: 200, message: sales };
+};
+
+module.exports = { checkoutServiceGet, checkoutServicePost, orderServiceGet };
