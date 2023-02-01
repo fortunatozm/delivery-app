@@ -5,15 +5,8 @@ import useApiGet from '../hooks/useApiGet';
 function DetailList() {
   const { id } = useParams();
   const { data, isFetching } = useApiGet('orders', id);
+  console.log(data);
 
-  // useEffect(() => {
-  //   // if (!isFetching) {
-  //   //   const
-  //   // } else {
-  //   console.log(data);
-  //   // }
-  // }, [isFetching]);
-  // const items = [{ index: 1, name: 'stella', quantity: 2, price: 2.99 }];
   return (
     <table>
       <tr>
@@ -62,6 +55,10 @@ function DetailList() {
             data-testid={ `customer_order_details__element-order-table-sub-total-
             ${index}` }
           >
+            {`${item.products[index].SaleProduct.quantity
+              * item.products[index].price}`.replace('.', ',')}
+          </th>
+          <th data-testid="customer_order_details__element-order-total-price">
             {`${item.totalPrice}`.replace('.', ',')}
           </th>
         </tr>

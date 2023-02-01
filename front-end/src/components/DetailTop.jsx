@@ -5,39 +5,37 @@ import formatDate from '../utils/formatDate';
 
 function DetailTop() {
   const { id } = useParams();
-  const { data: dataOrder } = useApiGet('orders', id);
+  const { data: dataOrder, isFetching: isFetchingOrder } = useApiGet('orders', id);
   const { data, isFetching } = useApiGet('seller');
-  const { sellerId, saleDate, status, id: idOrders } = dataOrder[0];
-  const sellerData = data.find((seller) => seller.id === sellerId);
-  const date = formatDate(saleDate);
-  console.log(sellerData);
 
-  // console.log(dataOrder, isFetchOrders, data, isFetching);
-  if (!isFetching) {
+  if (!isFetching && !isFetchingOrder) {
+    const { sellerId, saleDate, status, id: idOrders } = dataOrder[0];
+    const sellerData = data.find((seller) => seller.id === sellerId);
+    const date = formatDate(saleDate);
     return (
       <div id="dados-pedidos">
-        <div
+        <span
           data-testid="customer_order_details__element-order-details-label-order-id"
         >
           {`Pedido ${idOrders}`}
-        </div>
-        <div
+        </span>
+        <span
           data-testid="customer_order_details__element-order-details-label-seller-name"
         >
           {`P. Vend: ${sellerData.name}`}
-        </div>
-        <div
+        </span>
+        <span
           data-testid="customer_order_details__element-order-details-label-order-date"
         >
           {date}
-        </div>
-        <div
+        </span>
+        <span
           data-testid={ 'customer_order_details__element-order-details'
             + `-label-delivery-status
         ${id}` }
         >
           {status}
-        </div>
+        </span>
         <button
           type="button"
           data-testid="customer_order_details__button-delivery-check"
@@ -48,6 +46,11 @@ function DetailTop() {
       </div>
     );
   }
+  return (
+    <div>
+      Carregando...
+    </div>
+  );
 }
 
 export default DetailTop;
