@@ -9,7 +9,17 @@ function Orders() {
     <div>
       <Navbar isSeller />
       <div>
-        {isFetching && data.map((sale) => <SaleCard key={ sale.id } { ...sale } />)}
+        {!isFetching
+          && data.map(({ id, status, totalPrice, saleDate, deliveryAddress }) => (
+            <SaleCard
+              key={ id }
+              id={ id }
+              status={ status }
+              totalPrice={ Number(totalPrice) }
+              saleDate={ saleDate }
+              deliveryAddress={ deliveryAddress }
+            />
+          ))}
       </div>
     </div>
   );

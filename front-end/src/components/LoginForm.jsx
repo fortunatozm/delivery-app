@@ -23,16 +23,25 @@ function LoginForm() {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const redirectByRole = (role) => {
+    switch (role) {
+    case 'admin':
+      history.push('/admin/manage');
+      break;
+    case 'seller':
+      history.push('/seller/orders');
+      break;
+    default:
+      history.push('/customer/products');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setErrorText(false);
       const userRole = await login(formData);
-      if (userRole === 'administrator') {
-        history.push('/admin/manage');
-      } else {
-        history.push(`/${userRole}/products`);
-      }
+      redirectByRole(userRole);
     } catch (err) {
       setErrorText(true);
     }

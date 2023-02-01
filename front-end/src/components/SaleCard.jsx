@@ -1,5 +1,6 @@
-import { string, number, instanceOf } from 'prop-types';
+import { string, number } from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import formatDate from '../utils/formatDate';
 
 function SaleCard({ id, status, totalPrice, saleDate, deliveryAddress }) {
   const history = useHistory();
@@ -9,11 +10,15 @@ function SaleCard({ id, status, totalPrice, saleDate, deliveryAddress }) {
   };
 
   return (
-    <button type="button" onClick={ handleClick }>
+    <div>
       <div>
-        <p data-testid={ `seller_orders__element-order-id-${id}` }>
+        <button
+          type="button"
+          onClick={ handleClick }
+          data-testid={ `seller_orders__element-order-id-${id}` }
+        >
           {`Pedido ${id}`}
-        </p>
+        </button>
       </div>
       <div>
         <div>
@@ -24,7 +29,7 @@ function SaleCard({ id, status, totalPrice, saleDate, deliveryAddress }) {
           </div>
           <div>
             <p data-testid={ `seller_orders__element-order-date-${id}` }>
-              {saleDate}
+              {formatDate(saleDate)}
             </p>
             <p data-testid={ `seller_orders__element-card-price-${id}` }>
               {totalPrice}
@@ -35,7 +40,7 @@ function SaleCard({ id, status, totalPrice, saleDate, deliveryAddress }) {
           {deliveryAddress}
         </p>
       </div>
-    </button>
+    </div>
   );
 }
 
@@ -43,7 +48,7 @@ SaleCard.propTypes = {
   id: number.isRequired,
   status: string.isRequired,
   totalPrice: number.isRequired,
-  saleDate: instanceOf(Date).isRequired,
+  saleDate: string.isRequired,
   deliveryAddress: string.isRequired,
 };
 
