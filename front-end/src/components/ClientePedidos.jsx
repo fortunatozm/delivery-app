@@ -14,6 +14,12 @@ function ClienteMeusPedidos() {
     }
   }, [data, isFetching]);
 
+  function dataAtualFormatada(date) {
+    // 2023-02-01T12:45:57.000Z
+    const formatted = date.split('T')[0].split('-');
+    const dateFinished = `${formatted[2]}/${formatted[1]}/${formatted[0]}`;
+    return dateFinished;
+  }
   return (
     <div>
       <Navbar />
@@ -29,10 +35,10 @@ function ClienteMeusPedidos() {
             {status}
           </span>
           <span data-testid={ `customer_orders__element-order-date-${id}` }>
-            {saleDate}
+            {dataAtualFormatada(saleDate)}
           </span>
           <span data-testid={ `customer_orders__element-card-price-${id}` }>
-            {totalPrice}
+            {`${totalPrice}`.replace('.', ',')}
           </span>
         </div>
       ))}
