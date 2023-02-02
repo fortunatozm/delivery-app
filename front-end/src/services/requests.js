@@ -26,6 +26,10 @@ const requests = {
       const { data } = await api.get('/sales');
       return data;
     },
+    orders: async (id) => {
+      const { data } = await api.get(`/customer/orders/${id}`);
+      return data;
+    },
   },
 };
 
